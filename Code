@@ -1,6 +1,6 @@
 import tkinter as tk
 
-
+https://www.tinkercad.com/things/amawAlxSFe3-kliker
 root = tk.Tk() # Основное окно
 root.title("Кликер") # Надпись в топе окна
 root.geometry("700x350") # Размер окна X
