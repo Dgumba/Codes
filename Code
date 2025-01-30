@@ -1,42 +1,64 @@
-import tkinter as tk
 
-https://www.tinkercad.com/things/amawAlxSFe3-kliker
-root = tk.Tk() # Основное окно
-root.title("Кликер") # Надпись в топе окна
-root.geometry("700x350") # Размер окна X
-root.resizable(False,False) # Запрещение изменение окна по X и Y
-root.configure(bg="#d1ddde") # Фон окна
+const int redLedPin = 9;
+const int greenLedPin = 10;
+const int startButtonPin = 7;
+const int player1ButtonPin = 13;
+const int player2ButtonPin = 4;
+const int ledPlayer1Pin = 4;
+const int ledPlayer2Pin = 13;
 
-n = 0 # Счётчик
 
-def nplus():
-    global n
-    n += 1
-    if n <= 3:
-        label1["text"] = str(n) + " Рубля."
-    if n == 1:
-        label1["text"] = str(n) + " Рубль."
+unsigned long time = 0; 
+int player1Score = 0;
+int player2Score = 0;
 
-def nsbros():
-    global n
-    n = 0
-    label1["text"] = str(n) + " Рублей."
+void setup() {
+    pinMode(redLedPin, OUTPUT);
+    pinMode(greenLedPin, OUTPUT);
+    pinMode(startButtonPin, INPUT_PULLUP); 
+    pinMode(player1ButtonPin, INPUT_PULLUP);
+    pinMode(player2ButtonPin, INPUT_PULLUP);
+    
+    digitalWrite(redLedPin, HIGH); 
+}
 
-# Счётчик кликера:
-label1 = tk.Label(root, text=str(n) + " Pублей.", font=("Helvetica 50"), background="#d1ddde")
-label1.pack()
-
-# Кнопка 1:
-btn1 = tk.Button(text="Клик", background="#75a9fa", foreground="#fff", 
-              padx="150", pady="10", font="16", command=nplus)
-btn1.pack()
-
-# Кнопка 2:
-btn2 = tk.Button(text="Сброс", background="#e08e79", foreground="#fff", 
-              padx="150", pady="10", font="16", command=nsbros)
-btn2.pack()
-
-root.mainloop()
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-jsdahgahgsdgasdjhad
-
+void loop() {
+    if (!digitalRead(startButtonPin)) {
+        digitalWrite(redLedPin, LOW);   
+        digitalWrite(greenLedPin, HIGH);
+        
+        time = millis();                
+        player1Score = 0;               
+        player2Score = 0;
+        
+        while (millis() - time < 200000) { 
+            if (!digitalRead(player1ButtonPin)) {
+                player1Score++;
+            }
+            
+            if (!digitalRead(player2ButtonPin)) {
+                player2Score++;
+            }
+        }
+        
+        digitalWrite(greenLedPin, LOW); 
+        
+        if (player1Score > player2Score) {
+            
+            digitalWrite(ledPlayer1Pin, HIGH);
+        } else if (player2Score > player1Score) {
+            
+            digitalWrite(ledPlayer2Pin, HIGH);
+        } else {
+            
+            digitalWrite(ledPlayer1Pin, HIGH);
+            digitalWrite(ledPlayer2Pin, HIGH);
+        }
+        
+        delay(5000); 
+        
+        digitalWrite(ledPlayer1Pin, LOW); 
+        digitalWrite(ledPlayer2Pin, LOW);
+        digitalWrite(redLedPin, HIGH);    
+    }
+}
