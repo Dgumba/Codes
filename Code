@@ -37,3 +37,5 @@ btn2 = tk.Button(text="Сброс", background="#e08e79", foreground="#fff",
 btn2.pack()
 
 root.mainloop()
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
