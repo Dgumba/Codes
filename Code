@@ -1,64 +1,41 @@
 
-const int redLedPin = 9;
-const int greenLedPin = 10;
-const int startButtonPin = 7;
-const int player1ButtonPin = 13;
-const int player2ButtonPin = 4;
-const int ledPlayer1Pin = 4;
-const int ledPlayer2Pin = 13;
-
-
-unsigned long time = 0; 
-int player1Score = 0;
-int player2Score = 0;
-
-void setup() {
-    pinMode(redLedPin, OUTPUT);
-    pinMode(greenLedPin, OUTPUT);
-    pinMode(startButtonPin, INPUT_PULLUP); 
-    pinMode(player1ButtonPin, INPUT_PULLUP);
-    pinMode(player2ButtonPin, INPUT_PULLUP);
-    
-    digitalWrite(redLedPin, HIGH); 
+#include<LiquidCrystal.h>
+LiquidCrystal lcd(2,3,4,5,6,7);
+int x = 1;
+int y;
+int speed = 500;
+int direction = 1;
+int L;
+int R;
+void setup()
+{
+  lcd.begin(16,2);
+  pinMode(13, INPUT);
+  pinMode(12, INPUT);
 }
 
-void loop() {
-    if (!digitalRead(startButtonPin)) {
-        digitalWrite(redLedPin, LOW);   
-        digitalWrite(greenLedPin, HIGH);
-        
-        time = millis();                
-        player1Score = 0;               
-        player2Score = 0;
-        
-        while (millis() - time < 200000) { 
-            if (!digitalRead(player1ButtonPin)) {
-                player1Score++;
-            }
-            
-            if (!digitalRead(player2ButtonPin)) {
-                player2Score++;
-            }
-        }
-        
-        digitalWrite(greenLedPin, LOW); 
-        
-        if (player1Score > player2Score) {
-            
-            digitalWrite(ledPlayer1Pin, HIGH);
-        } else if (player2Score > player1Score) {
-            
-            digitalWrite(ledPlayer2Pin, HIGH);
-        } else {
-            
-            digitalWrite(ledPlayer1Pin, HIGH);
-            digitalWrite(ledPlayer2Pin, HIGH);
-        }
-        
-        delay(5000); 
-        
-        digitalWrite(ledPlayer1Pin, LOW); 
-        digitalWrite(ledPlayer2Pin, LOW);
-        digitalWrite(redLedPin, HIGH);    
-    }
+void loop()
+{
+  lcd.clear();
+  lcd.setCursor(0,digitalRead(13));
+  lcd.print("]");
+  lcd.setCursor(15,digitalRead(12));
+  lcd.print("[");
+  delay(10);
+  lcd.setCursor(x,y);
+  lcd.print("O");
+  
+  if (y == digitalRead(12) && x == 14){
+   direction=-1;
+   y = random(0,1+1);
+  }
+  
+  if (y == digitalRead(13) && x == 1){
+   direction=1;
+   y = random(0,1+1);
+  }
+  
+  
+  x = x + direction;
+  delay(speed);
 }
