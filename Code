@@ -1,94 +1,21 @@
-#include<LiquidCrystal.h>
-LiquidCrystal lcd(2,3,4,5,6,7);
-int x = 1;
-int y;
-int speed = 500;
-int direction = 1;
-int L;
-int R;
+int photores = A0;
+int leds[6] = {2,3,4,5,6,7};
+
 void setup()
 {
-  lcd.begin(16,2);
-  pinMode(13, INPUT);
-  pinMode(12, INPUT);
+  pinMode(photores, INPUT);
+  for (int i = 0; i < 6; i++)
+    pinMode(leds[i], OUTPUT);
+  Serial.begin(9600);
 }
 
 void loop()
 {
-  lcd.clear();
-  lcd.setCursor(0,digitalRead(13));
-  lcd.print("]");
-  lcd.setCursor(15,digitalRead(12));
-  lcd.print("[");
-  delay(10);
-  lcd.setCursor(x,y);
-  lcd.print("O");
-  
-  if (y == digitalRead(12) && x == 14){
-   direction=-1;
-   y = random(0,1+1);
-   speed -= 10;
-   
+  int data = analogRead(photores);
+  Serial.println(data);
+  int el = map(data, 150, 500, 6, 0);
+  for (int i = 0; i < el; i++){
+    digitalWrite(i, 1);
+  	digitalWrite(i, 0);
   }
-  
-  if (y == digitalRead(13) && x == 1){
-   direction=1;
-   y = random(0,1+1);
-   speed -= 10;
-  }
-  
-  
-  if (x<0) {
-   x = 1;
-   y = 0;
-   R += 1;
-   speed = 300;
-   direction = 1;
-   lcd.clear();
-   lcd.setCursor(8,0);
-   lcd.print("Right win");
-   lcd.setCursor(8,1);
-   lcd.print("R:");
-   lcd.print(R);
-   lcd.print("  ");
-   lcd.print("L:");
-   lcd.print(L);
-   
-   
-   delay(1000);
-  }
-  
-  if (x>15) {
-   x = 14;
-   y = 0;
-   L += 1;
-   speed = 300;
-   direction = -1;
-   lcd.clear();
-   delay(1000);
-   lcd.clear();
-   //lcd.setCursor(8,0);
-   //lcd.print("Right win");
-  // //lcd.setCursor(8,1);
-   //lcd.print("R:");
-   //lcd.print(R);
-   //lcd.print("   ");
-   //lcd.print("L:");
-   //lcd.print();
-   lcd.setCursor(1,0);
-   lcd.print("Left win");
-   lcd.setCursor(1,1);
-   lcd.print("R:");
-   lcd.print(R);
-   lcd.print("   ");
-   lcd.print("L:");
-   lcd.print(L);
-   
-   
-   delay(1000);
-   delay(1000);
-  }
-  
-  x = x + direction;
-  delay(speed);
 }
