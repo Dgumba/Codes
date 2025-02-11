@@ -1,22 +1,16 @@
-
-#define PIN_TRIG 8
-#define PIN_ECHO 7
-long duration, cm;
-void setup() {
-pinMode(13,OUTPUT);
-Serial.begin(9600);
-pinMode(PIN_TRIG, OUTPUT);
-pinMode(PIN_ECHO, INPUT);
+#include <Adafruit_LiquidCrystal.h>
+Adafruit_LiquidCrystal lcd(0);
+void setup()
+{
+  lcd.begin(16, 2);
+  pinMode(A5, INPUT);
 }
-void loop() {
-  digitalWrite(PIN_TRIG, LOW);
-  delayMicroseconds(5);
-  digitalWrite(PIN_TRIG, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(PIN_TRIG, LOW);
-  duration = pulseIn(PIN_ECHO, HIGH);
-cm = (duration / 2) / 29.1; 
-Serial.println(cm);
+
+void loop()
+{
+  lcd.clear();
+  lcd.print((((analogRead(A5) * 1.1) / 1024) - 0.5) * 100);
+  delay(500);
 }
 
 
