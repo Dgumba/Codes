@@ -1,3 +1,38 @@
+
+#define PIN_TRIG 8
+#define PIN_ECHO 7
+long duration, cm;
+void setup() {
+pinMode(13,OUTPUT);
+Serial.begin(9600);
+pinMode(PIN_TRIG, OUTPUT);
+pinMode(PIN_ECHO, INPUT);
+}
+void loop() {
+  digitalWrite(PIN_TRIG, LOW);
+  delayMicroseconds(5);
+  digitalWrite(PIN_TRIG, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(PIN_TRIG, LOW);
+  duration = pulseIn(PIN_ECHO, HIGH);
+cm = (duration / 2) / 29.1; 
+Serial.println(cm);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const int SPEAKER=9;
 int notes[] = {
 392, 392, 392, 311, 466, 392, 311, 466, 392,
