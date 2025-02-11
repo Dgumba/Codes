@@ -1,21 +1,23 @@
-int photores = A0;
-int leds[6] = {2,3,4,5,6,7};
-
-void setup()
-{
-  pinMode(photores, INPUT);
-  for (int i = 0; i < 6; i++)
-    pinMode(leds[i], OUTPUT);
-  Serial.begin(9600);
+const int SPEAKER=9;
+int notes[] = {
+392, 392, 392, 311, 466, 392, 311, 466, 392,
+587, 587, 587, 622, 466, 369, 311, 466, 392,
+784, 392, 392, 784, 739, 698, 659, 622, 659,
+415, 554, 523, 493, 466, 440, 466,
+311, 369, 311, 466, 392
+};
+int times[] = {
+350, 350, 350, 250, 100, 350, 250, 100, 700,
+350, 350, 350, 250, 100, 350, 250, 100, 700,
+350, 250, 100, 350, 250, 100, 100, 100, 450,
+150, 350, 250, 100, 100, 100, 450,
+150, 350, 250, 100, 750
+};
+void setup(){
+for (int i = 0; i < 39; i++){
+tone(SPEAKER, notes[i], times[i]*2);
+delay(times[i]*2);
+noTone(SPEAKER);
 }
-
-void loop()
-{
-  int data = analogRead(photores);
-  Serial.println(data);
-  int el = map(data, 150, 500, 6, 0);
-  for (int i = 0; i < el; i++){
-    digitalWrite(i, 1);
-  	digitalWrite(i, 0);
-  }
 }
+void loop(){}
