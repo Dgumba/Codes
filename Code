@@ -1,52 +1,56 @@
-#include <Adafruit_LiquidCrystal.h>
-Adafruit_LiquidCrystal lcd(0);
+int leds[5] = {2,3,4,5,6};
 void setup()
 {
-  lcd.begin(16, 2);
-  pinMode(A5, INPUT);
+  for (int i = 0; i < 6; i++)
+    pinMode(leds[i], OUTPUT);
 }
-
 void loop()
 {
-  lcd.clear();
-  lcd.print((((analogRead(A5) * 1.1) / 1024) - 0.5) * 100);
-  delay(500);
+  int rand1 = random(1,3 + 1 );
+  if (rand1 == 1){ 
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+    digitalWrite(6, HIGH);
+    delay(2000);
+    digitalWrite(2, LOW);
+    digitalWrite(3, LOW);
+    digitalWrite(4, LOW);
+    digitalWrite(5, LOW);
+    digitalWrite(6, LOW);
+    }
+  if (rand1 == 2){ 
+    digitalWrite(2, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(6, HIGH);
+    delay(2000);
+    digitalWrite(2, LOW);
+    digitalWrite(4, LOW);
+    digitalWrite(6, LOW);
+    digitalWrite(3, HIGH);
+    digitalWrite(5, HIGH);
+    delay(2000);
+    digitalWrite(3, LOW);
+    digitalWrite(5, LOW);
+    }
+  if (rand1 == 3){ 
+    digitalWrite(2, HIGH);
+    delay(300);
+    digitalWrite(3, HIGH);
+    delay(300);
+    digitalWrite(4, HIGH);
+    delay(300);
+    digitalWrite(5, HIGH);
+    delay(300);
+    digitalWrite(6, HIGH);
+    delay(2000);
+    digitalWrite(2, LOW);
+    digitalWrite(3, LOW);
+    digitalWrite(4, LOW);
+    digitalWrite(5, LOW);
+    digitalWrite(6, LOW);
+    }
+  
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const int SPEAKER=9;
-int notes[] = {
-392, 392, 392, 311, 466, 392, 311, 466, 392,
-587, 587, 587, 622, 466, 369, 311, 466, 392,
-784, 392, 392, 784, 739, 698, 659, 622, 659,
-415, 554, 523, 493, 466, 440, 466,
-311, 369, 311, 466, 392
-};
-int times[] = {
-350, 350, 350, 250, 100, 350, 250, 100, 700,
-350, 350, 350, 250, 100, 350, 250, 100, 700,
-350, 250, 100, 350, 250, 100, 100, 100, 450,
-150, 350, 250, 100, 100, 100, 450,
-150, 350, 250, 100, 750
-};
-void setup(){
-for (int i = 0; i < 39; i++){
-tone(SPEAKER, notes[i], times[i]*2);
-delay(times[i]*2);
-noTone(SPEAKER);
-}
-}
-void loop(){}
