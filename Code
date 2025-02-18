@@ -1,3 +1,7 @@
+#include <Keypad.h>
+
+#include <Adafruit_LiquidCrystal.h>
+Adafruit_LiquidCrystal lcd(0);
 const byte ROWS = 4; 
 const byte COLS = 4; 
 char keys[ROWS][COLS] = {
@@ -11,7 +15,20 @@ byte colPins[COLS] = {9, 8, 7, 6};
 
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
-{'1','2','3','A'},
-  {'4','5','6','B'},
-  {'7','8','9','C'},
-  {'*','0','#','D'}
+void setup()
+{
+   lcd.begin(16, 2);
+  pinMode(5,OUTPUT);
+  pinMode(3,OUTPUT);
+  pinMode(2,OUTPUT);
+}
+
+void loop()
+{
+ char key = keypad.getKey();  
+  if (key){
+    lcd.print(key);    
+  }
+
+
+}
