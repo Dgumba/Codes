@@ -1,9 +1,11 @@
 #include <Keypad.h>
-
 #include <Adafruit_LiquidCrystal.h>
 Adafruit_LiquidCrystal lcd(0);
+// 7355608
 const byte ROWS = 4; 
 const byte COLS = 4; 
+long password = 0;
+float clock2 = 40;
 char keys[ROWS][COLS] = {
   {'1','2','3','+'},
   {'4','5','6','-'},
@@ -12,9 +14,7 @@ char keys[ROWS][COLS] = {
 };
 byte rowPins[ROWS] = {13, 12, 11, 10}; 
 byte colPins[COLS] = {9, 8, 7, 6};
-
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
-
 void setup()
 {
    lcd.begin(16, 2);
@@ -22,13 +22,24 @@ void setup()
   pinMode(3,OUTPUT);
   pinMode(2,OUTPUT);
 }
-
 void loop()
 {
- char key = keypad.getKey();  
+ int key = keypad.getKey();
+ int keychik = key - 48;
   if (key){
-    lcd.print(key);    
+    lcd.print(keychik);  
+    password = password * 10 + keychik;
+    if (password == 7355608)
+    {
+     digitalWrite(2,1);
+     tone(4,360,500);
+      password = 0;
+      while (password != 7355608);
+      {
+       keychik = key - 48;
+        lcd.clear();
+        lcd.print(password);
+      }
+    }
   }
-
-
 }
