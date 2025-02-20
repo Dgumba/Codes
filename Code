@@ -1,45 +1,522 @@
-#include <Keypad.h>
 #include <Adafruit_LiquidCrystal.h>
 Adafruit_LiquidCrystal lcd(0);
-// 7355608
-const byte ROWS = 4; 
-const byte COLS = 4; 
-long password = 0;
-float clock2 = 40;
-char keys[ROWS][COLS] = {
-  {'1','2','3','+'},
-  {'4','5','6','-'},
-  {'7','8','9','/'},
-  {'C','0','=','*'}
-};
-byte rowPins[ROWS] = {13, 12, 11, 10}; 
-byte colPins[COLS] = {9, 8, 7, 6};
-Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
+#define PIN_PHOTO_SENSOR A0
+
+float volt = 0;
+float power = 0;
+int temp = 0;
+int a = 1;
 void setup()
 {
-   lcd.begin(16, 2);
-  pinMode(5,OUTPUT);
-  pinMode(3,OUTPUT);
-  pinMode(2,OUTPUT);
+  
+  pinMode(A2, INPUT);
+  lcd.begin(16,2);
+  pinMode(9 , OUTPUT); 
+  pinMode(2 , OUTPUT);
+  pinMode(3 , OUTPUT);
+  pinMode(8, INPUT); 
+  pinMode(13, OUTPUT);
+  pinMode(12, OUTPUT);
+  pinMode(11, OUTPUT);
+  pinMode(10, OUTPUT);
+  pinMode(7, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
 }
+
 void loop()
 {
- int key = keypad.getKey();
- int keychik = key - 48;
-  if (key){
-    lcd.print(keychik);  
-    password = password * 10 + keychik;
-    if (password == 7355608)
+  int duration, cm;
+  power = analogRead(A2);
+  volt =(power / 1024)*5; 
+  temp =(volt - 0.5)*100;
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("t*:");
+  lcd.print(temp);
+  delay(1000);
+ 
+  
+  digitalWrite(9, LOW); 
+  delayMicroseconds(2); 
+  digitalWrite(9, HIGH); 
+  delayMicroseconds(10); 
+  digitalWrite(9 ,LOW); 
+
+  duration = pulseIn(8 ,HIGH); 
+
+  cm = duration / 58; 
+  if (cm <= 15)
+  {
+    digitalWrite(2, HIGH);
+  }
+  else
+  {
+    digitalWrite(2, LOW);
+  }
+  int light = analogRead(PIN_PHOTO_SENSOR);
+  Serial.println(light);
+  lcd.setCursor(0,1);
+  lcd.print("l*:");
+  lcd.print(light);
+  if (light < 400) 
+  {
+    digitalWrite(3, LOW);
+  } 
+  else 
+  {
+    digitalWrite(3, HIGH);
+  }
+  if (digitalRead(13) == HIGH)
+   {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+   }
+  if ((digitalRead(12) == HIGH) or (digitalRead(11) == HIGH))
+  {
+    while (a = 1){
+    if (digitalRead(4) == HIGH)
     {
-     digitalWrite(2,1);
-     tone(4,360,500);
-      password = 0;
-      while (password != 7355608);
-      {
-       keychik = key - 48;
-        lcd.clear();
-        lcd.print(password);
-      }
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+    }
+     tone(5, 1000, 250);
+    digitalWrite(10, HIGH);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+    }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+    }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+    }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+        
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 250);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, LOW);
+    delay(250);
+      if (digitalRead(4) == HIGH)
+    {
+      digitalWrite(7, HIGH); 
+      delay(5000);
+      break ;
+     }
+    digitalWrite(10, HIGH);
+      tone(5, 1000, 10000);
+    delay(250);
+    digitalWrite(10, LOW);
+    delay(250);
+    digitalWrite(10, HIGH);
+    delay(250);
+    digitalWrite(10, LOW);
+    delay(250);
     }
   }
+    
+    
+  
+
+delay(500);
+  
 }
